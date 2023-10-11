@@ -11,6 +11,12 @@ import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
+        System.out.println("\n...Starting Program... \n");
+        parseGraph("C:/Users/ldf08/IdeaProjects/CSE464Project/input.dot");
+        System.out.println("\n...Ending Program... \n");
+    }
+
+    public static void parseGraph(String filePath) {
         DefaultDirectedGraph<String, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
         List<String> dirOfEdges = new ArrayList<>();
 
@@ -19,7 +25,7 @@ public class Main {
         int i = 0;
         String[] nodes = new String[5];
 
-        try (Scanner scanner = new Scanner(new File("C:/Users/ldf08/IdeaProjects/CSE464Project/input.dot"))) {
+        try (Scanner scanner = new Scanner(new File(filePath))) {
             Pattern edgePattern = Pattern.compile("(\\w+) -> (\\w+);");
 
             while (scanner.hasNextLine()) {
@@ -57,8 +63,6 @@ public class Main {
         nodes = new HashSet<String>(Arrays.asList(nodes)).toArray(new String[0]);
 
         System.out.println(Arrays.toString(nodes));
-
-        System.out.println(""); // Formatting
 
         System.out.println("Edge Directions: ");
         for (String str : dirOfEdges) { // Prints every string from dirOfEdges i.e. A -> B, etc.
