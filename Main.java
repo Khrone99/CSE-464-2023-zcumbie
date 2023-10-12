@@ -4,6 +4,7 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -25,6 +26,9 @@ public class Main {
 
         addEdge("F", "G");
         addEdge("F", "G");
+        addEdge("G", "F");
+
+        outputDOTGraph("C:/Users/ldf08/IdeaProjects/CSE464Project/input2.dot");
 
         System.out.println("\n...Ending Program... \n");
     }
@@ -107,6 +111,23 @@ public class Main {
             graph.addEdge(srcLabel, dstLabel);
         }   else {
             System.out.println("Node " + srcLabel + " and Node " + dstLabel + " already have an edge in that direction!");
+        }
+    }
+
+    public static void outputDOTGraph(String path) {
+        try (FileWriter fileWriter = new FileWriter(path)) {
+            fileWriter.write("digraph G {\n");
+
+            for (DefaultEdge edge : graph.edgeSet()) {
+                String source = graph.getEdgeSource(edge);
+                String target = graph.getEdgeTarget(edge);
+                fileWriter.write("  " + source + " -> " + target + ";\n");
+            }
+
+            fileWriter.write("}\n");
+            System.out.println("Graph exported to " + path);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
