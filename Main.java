@@ -10,14 +10,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
+    static DefaultDirectedGraph<String, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
+
     public static void main(String[] args) {
         System.out.println("\n...Starting Program... \n");
+
         parseGraph("C:/Users/ldf08/IdeaProjects/CSE464Project/input.dot");
+
+        addNode("E");
+        addNode("E");
+
+        String[] newNodes = {"F", "G", "H", "F"};
+        addNodes(newNodes);
+
+        System.out.println(graph.edgeSet());
+
         System.out.println("\n...Ending Program... \n");
     }
 
     public static void parseGraph(String filePath) {
-        DefaultDirectedGraph<String, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
         List<String> dirOfEdges = new ArrayList<>();
 
         int numOfNodes = 0;
@@ -67,6 +78,26 @@ public class Main {
         System.out.println("Edge Directions: ");
         for (String str : dirOfEdges) { // Prints every string from dirOfEdges i.e. A -> B, etc.
             System.out.println(str);
+        }
+
+        System.out.println("");
+    }
+
+    public static void addNode(String label) {
+        if (!graph.containsVertex(label)) {
+            graph.addVertex(label);
+        } else {
+            System.out.println("Node " + label + " already exists!");
+        }
+    }
+
+    public static void addNodes(String[] labels) {
+        for (String label : labels) {
+            if (!graph.containsVertex(label)) {
+                graph.addVertex(label);
+            }  else {
+                System.out.println("Node " + label + " already exists!");
+            }
         }
     }
 }
