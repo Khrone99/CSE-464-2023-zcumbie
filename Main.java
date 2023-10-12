@@ -23,7 +23,8 @@ public class Main {
         String[] newNodes = {"F", "G", "H", "F"};
         addNodes(newNodes);
 
-        System.out.println(graph.edgeSet());
+        addEdge("F", "G");
+        addEdge("F", "G");
 
         System.out.println("\n...Ending Program... \n");
     }
@@ -98,6 +99,14 @@ public class Main {
             }  else {
                 System.out.println("Node " + label + " already exists!");
             }
+        }
+    }
+
+    public static void addEdge(String srcLabel, String dstLabel) {
+        if (!graph.containsEdge(srcLabel, dstLabel)) {
+            graph.addEdge(srcLabel, dstLabel);
+        }   else {
+            System.out.println("Node " + srcLabel + " and Node " + dstLabel + " already have an edge in that direction!");
         }
     }
 }
