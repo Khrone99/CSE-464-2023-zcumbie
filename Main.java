@@ -10,6 +10,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.junit.Assert.assertEquals;
+
 public class Main {
     static DefaultDirectedGraph<String, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
@@ -128,6 +130,33 @@ public class Main {
             System.out.println("Graph exported to " + path);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    // Project Part 2 Code
+
+    public static void removeNode(String label) {
+        if (graph.containsVertex(label)) {
+            graph.removeVertex(label);
+        } else {
+            throw new NodeNotFoundException("The node does not exist in the graph.");
+        }
+    }
+
+    public static void removeNodes(String[] labels) {
+        for (String str : labels) {
+            if (graph.containsVertex(str)) {
+                graph.removeVertex(str);
+            } else {
+                throw new NodeNotFoundException("The node does not exist in the graph.");
+            }
+        }
+    }
+    public static void removeEdge(String srcLabel, String dstLabel) {
+        if (graph.containsEdge(srcLabel, dstLabel)) {
+            graph.removeEdge(srcLabel, dstLabel);
+        } else {
+            throw new EdgeNotFoundException("The edge does not exist in the graph.");
         }
     }
 }
