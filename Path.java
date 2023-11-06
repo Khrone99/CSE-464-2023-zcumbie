@@ -7,9 +7,10 @@ import org.jgrapht.traverse.BreadthFirstIterator;
 import org.jgrapht.traverse.GraphIterator;
 
 public class Path {
-    public static Graph<String, DefaultEdge> GraphSearch(Graph<String, DefaultEdge> initialGraph, String startNode) {
+    public static Graph<String, DefaultEdge> GraphSearch(Graph<String, DefaultEdge> initialGraph, String startNode, String dstNode) {
         // Create a new graph for the search result
         Graph<String, DefaultEdge> newGraph = new SimpleGraph<>(DefaultEdge.class);
+        boolean found = false;
 
         // Create a BFS iterator starting from the specified node
         GraphIterator<String, DefaultEdge> iterator = new BreadthFirstIterator<>(initialGraph, startNode);
@@ -28,9 +29,17 @@ public class Path {
                 newGraph.addVertex(sourceVertex);
                 newGraph.addVertex(targetVertex);
                 newGraph.addEdge(sourceVertex, targetVertex);
+
+                if (targetVertex == dstNode) {
+                    found = true;
+                    return searchGraph;
+                }
             }
         }
 
+        if (found == false) {
+            return null;
+        }
         return newGraph;
     }
 }
