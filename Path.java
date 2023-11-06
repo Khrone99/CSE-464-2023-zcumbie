@@ -1,16 +1,18 @@
 package org.example;
-
-enum Algorithm {
-    DFS,
-    BFS
-}
-
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.traverse.DepthFirstIterator;
 import org.jgrapht.traverse.GraphIterator;
 import org.jgrapht.traverse.BreadthFirstIterator;
+
+import static org.example.Algorithm.BFS;
+import static org.example.Algorithm.DFS;
+
+enum Algorithm {
+    DFS,
+    BFS
+}
 
 public class Path {
     public static Graph<String, DefaultEdge> GraphSearch(Graph<String, DefaultEdge> initialGraph, String startNode, String dstNode, Algorithm algorithm) {
