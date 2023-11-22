@@ -98,14 +98,6 @@ public class Main {
         }
     }
 
-    public static void removeNode(String label) {
-        if (graph.containsVertex(label)) {
-            graph.removeVertex(label);
-        } else {
-            throw new NodeNotFoundException("The node does not exist in the graph.");
-        }
-    }
-
     public static void addNodes(String[] labels) {
         for (String label : labels) {
             if (!graph.containsVertex(label)) {
@@ -138,6 +130,16 @@ public class Main {
             System.out.println("Graph exported to " + path);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    // Project Part 2 Code
+
+    public static void removeNode(String label) {
+        if (graph.containsVertex(label)) {
+            graph.removeVertex(label);
+        } else {
+            throw new NodeNotFoundException("The node does not exist in the graph.");
         }
     }
 
