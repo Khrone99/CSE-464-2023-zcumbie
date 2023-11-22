@@ -116,6 +116,16 @@ public class Main {
         }
     }
 
+    public static void removeNodes(String[] labels) {
+        for (String str : labels) {
+            if (graph.containsVertex(str)) {
+                graph.removeVertex(str);
+            } else {
+                throw new NodeNotFoundException("The node does not exist in the graph.");
+            }
+        }
+    }
+
     public static void addEdge(String srcLabel, String dstLabel) {
         if (!graph.containsEdge(srcLabel, dstLabel)) {
             graph.addEdge(srcLabel, dstLabel);
@@ -141,15 +151,6 @@ public class Main {
         }
     }
 
-    public static void removeNodes(String[] labels) {
-        for (String str : labels) {
-            if (graph.containsVertex(str)) {
-                graph.removeVertex(str);
-            } else {
-                throw new NodeNotFoundException("The node does not exist in the graph.");
-            }
-        }
-    }
     public static void removeEdge(String srcLabel, String dstLabel) {
         if (graph.containsEdge(srcLabel, dstLabel)) {
             graph.removeEdge(srcLabel, dstLabel);
