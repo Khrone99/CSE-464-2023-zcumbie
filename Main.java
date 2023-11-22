@@ -15,26 +15,6 @@ import static org.junit.Assert.assertEquals;
 public class Main {
     static DefaultDirectedGraph<String, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
-    public static void main(String[] args) {
-        System.out.println("\n...Starting Program... \n");
-
-        parseGraph("C:/Users/ldf08/IdeaProjects/CSE464Project/input.dot");
-
-        addNode("E");
-        addNode("E");
-
-        String[] newNodes = {"F", "G", "H", "F"};
-        addNodes(newNodes);
-
-        addEdge("F", "G");
-        addEdge("F", "G");
-        addEdge("G", "F");
-
-        outputDOTGraph("C:/Users/ldf08/IdeaProjects/CSE464Project/input2.dot");
-
-        System.out.println("\n...Ending Program... \n");
-    }
-
     public static void parseGraph(String filePath) {
         List<String> dirOfEdges = new ArrayList<>();
 
@@ -157,5 +137,25 @@ public class Main {
         } else {
             throw new EdgeNotFoundException("The edge does not exist in the graph.");
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("\n...Starting Program... \n");
+
+        parseGraph("C:/Users/ldf08/IdeaProjects/CSE464Project/input.dot");
+
+        addNode("E");
+        addNode("E");
+
+        String[] newNodes = {"F", "G", "H", "F"};
+        addNodes(newNodes);
+
+        addEdge("F", "G");
+        addEdge("F", "G");
+        addEdge("G", "F");
+
+        outputDOTGraph("C:/Users/ldf08/IdeaProjects/CSE464Project/input2.dot");
+
+        System.out.println("\n...Ending Program... \n");
     }
 }
