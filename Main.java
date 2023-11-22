@@ -134,6 +134,14 @@ public class Main {
         }
     }
 
+    public static void removeEdge(String srcLabel, String dstLabel) {
+        if (graph.containsEdge(srcLabel, dstLabel)) {
+            graph.removeEdge(srcLabel, dstLabel);
+        } else {
+            throw new EdgeNotFoundException("The edge does not exist in the graph.");
+        }
+    }
+
     public static void outputDOTGraph(String path) {
         try (FileWriter fileWriter = new FileWriter(path)) {
             fileWriter.write("digraph G {\n");
@@ -148,14 +156,6 @@ public class Main {
             System.out.println("Graph exported to " + path);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public static void removeEdge(String srcLabel, String dstLabel) {
-        if (graph.containsEdge(srcLabel, dstLabel)) {
-            graph.removeEdge(srcLabel, dstLabel);
-        } else {
-            throw new EdgeNotFoundException("The edge does not exist in the graph.");
         }
     }
 }
