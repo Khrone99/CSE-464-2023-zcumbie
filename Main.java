@@ -90,6 +90,23 @@ public class Main {
         System.out.println("");
     }
 
+    public static void outputDOTGraph(String path) {
+        try (FileWriter fileWriter = new FileWriter(path)) {
+            fileWriter.write("digraph G {\n");
+
+            for (DefaultEdge edge : graph.edgeSet()) {
+                String source = graph.getEdgeSource(edge);
+                String target = graph.getEdgeTarget(edge);
+                fileWriter.write("  " + source + " -> " + target + ";\n");
+            }
+
+            fileWriter.write("}\n");
+            System.out.println("Graph exported to " + path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void addNode(String label) {
         if (!graph.containsVertex(label)) {
             graph.addVertex(label);
@@ -139,23 +156,6 @@ public class Main {
             graph.removeEdge(srcLabel, dstLabel);
         } else {
             throw new EdgeNotFoundException("The edge does not exist in the graph.");
-        }
-    }
-
-    public static void outputDOTGraph(String path) {
-        try (FileWriter fileWriter = new FileWriter(path)) {
-            fileWriter.write("digraph G {\n");
-
-            for (DefaultEdge edge : graph.edgeSet()) {
-                String source = graph.getEdgeSource(edge);
-                String target = graph.getEdgeTarget(edge);
-                fileWriter.write("  " + source + " -> " + target + ";\n");
-            }
-
-            fileWriter.write("}\n");
-            System.out.println("Graph exported to " + path);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
