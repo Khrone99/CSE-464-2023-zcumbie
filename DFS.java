@@ -5,17 +5,14 @@ import org.jgrapht.graph.DefaultEdge;
 
 import java.util.*;
 
-public class DFS {
-    public static List<String> GraphSearch(Graph<String, DefaultEdge> initialGraph, String startNode, String dstNode) {
-        Stack<String> stackOfNodes = new Stack<>();
-        Map<String, String> parentMap = new HashMap<>();
-        Set<String> visitedNodes = new HashSet<>();
+public class DFS extends SearchAlgorithm{
 
+    public void addStartNode(String startNode, String dstNode) {
         stackOfNodes.push(startNode);
         visitedNodes.add(startNode);
+    }
 
-        boolean foundDstNode = false;
-
+    public void runWhileLoop(Graph<String, DefaultEdge> initialGraph, String dstNode) {
         while (!stackOfNodes.isEmpty() && !foundDstNode) {
             String currentVertex = stackOfNodes.pop();
 
@@ -33,13 +30,10 @@ public class DFS {
                 }
             }
         }
+    }
 
-        if (!foundDstNode) {
-            return Collections.emptyList();
-        }
-
+    public void reconstructThePath(String startNode, String dstNode) {
         // Reconstruct path from destination node to start node
-        List<String> reconstructedPath = new ArrayList<>();
         String currentNode = dstNode;
 
         while (!currentNode.equals(startNode)) {
@@ -49,7 +43,5 @@ public class DFS {
 
         reconstructedPath.add(startNode);
         Collections.reverse(reconstructedPath);
-
-        return reconstructedPath;
     }
 }
