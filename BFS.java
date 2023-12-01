@@ -4,17 +4,14 @@ import org.jgrapht.graph.DefaultEdge;
 
 import java.util.*;
 
-public class BFS {
-    public static List<String> GraphSearch(Graph<String, DefaultEdge> initialGraph, String startNode, String dstNode) {
-        Queue<String> queuedNodes = new LinkedList<>();
-        Map<String, String> parentMap = new HashMap<>();
-        Set<String> visitedNodes = new HashSet<>();
+public class BFS extends SearchAlgorithm{
 
+    public void addStartNode(String startNode, String dstNode) {
         queuedNodes.add(startNode);
         visitedNodes.add(startNode);
+    }
 
-        boolean foundDstNode = false;
-
+    public void runWhileLoop(Graph<String, DefaultEdge> initialGraph, String dstNode) {
         while (!queuedNodes.isEmpty() && !foundDstNode) {
             String currentVertex = queuedNodes.poll();
 
@@ -32,13 +29,10 @@ public class BFS {
                 }
             }
         }
+    }
 
-        if (!foundDstNode) {
-            return Collections.emptyList();
-        }
-
+    public void reconstructThePath(String startNode, String dstNode) {
         // Reconstruct path from destination node to start node
-        List<String> reconstructedPath = new ArrayList<>();
         String currentNode = dstNode;
 
         while (!currentNode.equals(startNode)) {
@@ -48,7 +42,5 @@ public class BFS {
 
         reconstructedPath.add(startNode);
         Collections.reverse(reconstructedPath);
-
-        return reconstructedPath;
     }
 }
