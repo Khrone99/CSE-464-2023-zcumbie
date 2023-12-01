@@ -17,8 +17,6 @@ public class Main {
     static List<String> path1 = new ArrayList<>();
     static BFS bfs = new BFS();
     static DFS dfs = new DFS();
-    
-    static DefaultDirectedGraph<String, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
     public static void parseGraph(String filePath) {
         List<String> dirOfEdges = new ArrayList<>();
