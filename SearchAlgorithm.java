@@ -1,50 +1,30 @@
 package org.example;
-
 import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
-import org.jgrapht.traverse.BreadthFirstIterator;
-import org.jgrapht.traverse.DepthFirstIterator;
-import org.jgrapht.traverse.GraphIterator;
 
-import static org.example.Algorithm.BFS;
+import java.util.*;
 
 public abstract class SearchAlgorithm {
 
-    public static Graph<String, DefaultEdge> GraphSearch(Graph<String, DefaultEdge> initialGraph, String startNode, String dstNode) {
-        // Create a new graph for the search result
-        Graph<String, DefaultEdge> searchGraph = new SimpleGraph<>(DefaultEdge.class);
-        boolean found = false;
+    public Queue<String> queuedNodes = new LinkedList<>();
+    public Stack<String> stackOfNodes = new Stack<>();
+    public Map<String, String> parentMap = new HashMap<>();
+    public Set<String> visitedNodes = new HashSet<>();
+    public List<String> reconstructedPath = new ArrayList<>();
 
-        GraphIterator<String, DefaultEdge> iterator = null;
+    boolean foundDstNode = false;
 
-        // Add the start node to the search graph
-        searchGraph.addVertex(startNode);
-
-        // Traverse the graph using BFS/DFS and add nodes and edges to the search graph
-        while (iterator.hasNext()) {
-            String currentVertex = iterator.next();
-            for (DefaultEdge edge : initialGraph.edgesOf(currentVertex)) {
-                String sourceVertex = initialGraph.getEdgeSource(edge);
-                String targetVertex = initialGraph.getEdgeTarget(edge);
-
-                // Add vertices and edges to the search graph
-                searchGraph.addVertex(sourceVertex);
-                searchGraph.addVertex(targetVertex);
-                searchGraph.addEdge(sourceVertex, targetVertex);
-
-
-                if (targetVertex == dstNode) {
-                    found = true;
-                    return searchGraph;
-                }
-            }
-        }
-
-        if (found == false) {
-            return null;
-        }
-        return searchGraph;
+    public final List<String> GraphSearch(Graph<String, DefaultEdge> initialGraph, String startNode, String dstNode) {
+        addStartNode(startNode, dstNode);
+        runWhileLoop( initialGraph, dstNode);
+        reconstructThePath(startNode, dstNode);
+        return reconstructedPath;
     }
+
+    public abstract void addStartNode(String startNode, String dstNode);
+
+    public abstract void runWhileLoop(Graph<String, DefaultEdge> initialGraph, String dstNode);
+
+    public abstract void reconstructThePath(String startNode, String dstNode);
+
 }
