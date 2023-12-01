@@ -14,6 +14,11 @@ import static org.junit.Assert.assertEquals;
 
 public class Main {
     static DefaultDirectedGraph<String, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
+    static List<String> path1 = new ArrayList<>();
+    static BFS bfs = new BFS();
+    static DFS dfs = new DFS();
+    
+    static DefaultDirectedGraph<String, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
     public static void parseGraph(String filePath) {
         List<String> dirOfEdges = new ArrayList<>();
