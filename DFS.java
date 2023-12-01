@@ -1,46 +1,55 @@
 package org.example;
 
 import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
-import org.jgrapht.traverse.DepthFirstIterator;
-import org.jgrapht.traverse.GraphIterator;
 
-public class DFS extends SearchAlgorithm{
-    public static Graph<String, DefaultEdge> GraphSearch(Graph<String, DefaultEdge> initialGraph, String startNode, String dstNode) {
-        // Create a new graph for the search result
-        Graph<String, DefaultEdge> searchGraph = new SimpleGraph<>(DefaultEdge.class);
-        boolean found = false;
+import java.util.*;
 
-        GraphIterator<String, DefaultEdge> iterator = new DepthFirstIterator<>(initialGraph, startNode);
+public class DFS {
+    public static List<String> GraphSearch(Graph<String, DefaultEdge> initialGraph, String startNode, String dstNode) {
+        Stack<String> stackOfNodes = new Stack<>();
+        Map<String, String> parentMap = new HashMap<>();
+        Set<String> visitedNodes = new HashSet<>();
 
-        // Add the start node to the search graph
-        searchGraph.addVertex(startNode);
+        stackOfNodes.push(startNode);
+        visitedNodes.add(startNode);
 
-        // Traverse the graph using BFS/DFS and add nodes and edges to the search graph
-        while (iterator.hasNext()) {
-            String currentVertex = iterator.next();
-            for (DefaultEdge edge : initialGraph.edgesOf(currentVertex)) {
-                String sourceVertex = initialGraph.getEdgeSource(edge);
-                String targetVertex = initialGraph.getEdgeTarget(edge);
+        boolean foundDstNode = false;
 
-                // Add vertices and edges to the search graph
-                searchGraph.addVertex(sourceVertex);
-                searchGraph.addVertex(targetVertex);
-                searchGraph.addEdge(sourceVertex, targetVertex);
+        while (!stackOfNodes.isEmpty() && !foundDstNode) {
+            String currentVertex = stackOfNodes.pop();
 
+            if (currentVertex.equals(dstNode)) {
+                foundDstNode = true;
+                break;
+            }
 
-                if (targetVertex == dstNode) {
-                    found = true;
-                    return searchGraph;
+            for (DefaultEdge edge : initialGraph.outgoingEdgesOf(currentVertex)) {
+                String neighbor = initialGraph.getEdgeTarget(edge);
+                if (!visitedNodes.contains(neighbor)) {
+                    visitedNodes.add(neighbor);
+                    parentMap.put(neighbor, currentVertex);
+                    stackOfNodes.push(neighbor);
                 }
             }
         }
 
-        if (found == false) {
-            return null;
+        if (!foundDstNode) {
+            return Collections.emptyList();
         }
-        return searchGraph;
+
+        // Reconstruct path from destination node to start node
+        List<String> reconstructedPath = new ArrayList<>();
+        String currentNode = dstNode;
+
+        while (!currentNode.equals(startNode)) {
+            reconstructedPath.add(currentNode);
+            currentNode = parentMap.get(currentNode);
+        }
+
+        reconstructedPath.add(startNode);
+        Collections.reverse(reconstructedPath);
+
+        return reconstructedPath;
     }
 }
