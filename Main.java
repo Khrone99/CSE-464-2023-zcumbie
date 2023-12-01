@@ -142,19 +142,13 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("\n...Starting Program... \n");
 
-        parseGraph("C:/Users/ldf08/IdeaProjects/CSE464Project/input.dot");
+        parseGraph("C:/Users/ldf08/IdeaProjects/CSE464Project/input2.dot");
 
-        addNode("E");
-        addNode("E");
+        path1 = bfs.GraphSearch(graph, "a", "h");
+        System.out.println(path1.toString());
 
-        String[] newNodes = {"F", "G", "H", "F"};
-        addNodes(newNodes);
-
-        addEdge("F", "G");
-        addEdge("F", "G");
-        addEdge("G", "F");
-
-        outputDOTGraph("C:/Users/ldf08/IdeaProjects/CSE464Project/input2.dot");
+        path1 = dfs.GraphSearch(graph, "a", "h");
+        System.out.println(path1.toString());
 
         System.out.println("\n...Ending Program... \n");
     }
