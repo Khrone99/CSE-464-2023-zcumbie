@@ -10,30 +10,11 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.junit.Assert.assertEquals;
-
 public class Main {
     static DefaultDirectedGraph<String, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
-
-    public static void main(String[] args) {
-        System.out.println("\n...Starting Program... \n");
-
-        parseGraph("C:/Users/ldf08/IdeaProjects/CSE464Project/input.dot");
-
-        addNode("E");
-        addNode("E");
-
-        String[] newNodes = {"F", "G", "H", "F"};
-        addNodes(newNodes);
-
-        addEdge("F", "G");
-        addEdge("F", "G");
-        addEdge("G", "F");
-
-        outputDOTGraph("C:/Users/ldf08/IdeaProjects/CSE464Project/input2.dot");
-
-        System.out.println("\n...Ending Program... \n");
-    }
+    static List<String> path1 = new ArrayList<>();
+    static BFS bfs = new BFS();
+    static DFS dfs = new DFS();
 
     public static void parseGraph(String filePath) {
         List<String> dirOfEdges = new ArrayList<>();
@@ -41,7 +22,7 @@ public class Main {
         int numOfNodes = 0;
         int numOfEdges = 0;
         int i = 0;
-        String[] nodes = new String[5];
+        String[] nodes = new String[9];
 
         try (Scanner scanner = new Scanner(new File(filePath))) {
             Pattern edgePattern = Pattern.compile("(\\w+) -> (\\w+);");
@@ -90,32 +71,6 @@ public class Main {
         System.out.println("");
     }
 
-    public static void addNode(String label) {
-        if (!graph.containsVertex(label)) {
-            graph.addVertex(label);
-        } else {
-            System.out.println("Node " + label + " already exists!");
-        }
-    }
-
-    public static void addNodes(String[] labels) {
-        for (String label : labels) {
-            if (!graph.containsVertex(label)) {
-                graph.addVertex(label);
-            }  else {
-                System.out.println("Node " + label + " already exists!");
-            }
-        }
-    }
-
-    public static void addEdge(String srcLabel, String dstLabel) {
-        if (!graph.containsEdge(srcLabel, dstLabel)) {
-            graph.addEdge(srcLabel, dstLabel);
-        }   else {
-            System.out.println("Node " + srcLabel + " and Node " + dstLabel + " already have an edge in that direction!");
-        }
-    }
-
     public static void outputDOTGraph(String path) {
         try (FileWriter fileWriter = new FileWriter(path)) {
             fileWriter.write("digraph G {\n");
@@ -133,13 +88,29 @@ public class Main {
         }
     }
 
-    // Project Part 2 Code
+    public static void addNode(String label) {
+        if (!graph.containsVertex(label)) {
+            graph.addVertex(label);
+        } else {
+            System.out.println("Node " + label + " already exists!");
+        }
+    }
 
     public static void removeNode(String label) {
         if (graph.containsVertex(label)) {
             graph.removeVertex(label);
         } else {
             throw new NodeNotFoundException("The node does not exist in the graph.");
+        }
+    }
+
+    public static void addNodes(String[] labels) {
+        for (String label : labels) {
+            if (!graph.containsVertex(label)) {
+                graph.addVertex(label);
+            }  else {
+                System.out.println("Node " + label + " already exists!");
+            }
         }
     }
 
@@ -152,11 +123,48 @@ public class Main {
             }
         }
     }
+
+    public static void addEdge(String srcLabel, String dstLabel) {
+        if (!graph.containsEdge(srcLabel, dstLabel)) {
+            graph.addEdge(srcLabel, dstLabel);
+        }   else {
+            System.out.println("Node " + srcLabel + " and Node " + dstLabel + " already have an edge in that direction!");
+        }
+    }
+
     public static void removeEdge(String srcLabel, String dstLabel) {
         if (graph.containsEdge(srcLabel, dstLabel)) {
             graph.removeEdge(srcLabel, dstLabel);
         } else {
             throw new EdgeNotFoundException("The edge does not exist in the graph.");
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("\n...Starting Program... \n");
+
+        parseGraph("C:/Users/ldf08/IdeaProjects/CSE464Project/input2.dot");
+
+        System.out.println("Template Pattern");
+        path1 = bfs.GraphSearch(graph, "a", "h");
+        System.out.println(path1.toString());
+
+        path1 = dfs.GraphSearch(graph, "a", "h");
+        System.out.println(path1.toString());
+
+        Algorithm BFSS = new BFSStrategy();
+        Algorithm DFSS = new DFSStrategy();
+
+        Path represent = new StratRep();
+
+        System.out.println();
+        System.out.println("Strategy Pattern");
+        path1 = represent.GraphSearch(graph,"a", "h", BFSS);
+        System.out.println(path1.toString());
+
+        path1 = represent.GraphSearch(graph,"a", "h", DFSS);
+        System.out.println(path1.toString());
+
+        System.out.println("\n...Ending Program... \n");
     }
 }
